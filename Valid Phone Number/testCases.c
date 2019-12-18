@@ -7,6 +7,8 @@ char *phoneOne = "(123) 456-7890";
 char *phoneTwo = "(1111) 456-7890";
 char *phoneThree = "(abc) def-hihk";
 char *phoneFour = "(098) 123 4567";
+char *phoneFive = "(123)123-1234";
+char *phoneSix = "(000) 000-0000";
 
 void assertPrint(char *expected, bool actual){
     char *ac = actual==true?"True":"False";
@@ -18,5 +20,7 @@ int main(){
     assertPrint("False",valid_phone_number(phoneTwo));
     assertPrint("False",valid_phone_number(phoneThree));
     assertPrint("False",valid_phone_number(phoneFour));
+    assertPrint("False",valid_phone_number(phoneFive));
+    assertPrint("True",valid_phone_number(phoneSix));
 }
 
