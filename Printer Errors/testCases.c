@@ -19,12 +19,14 @@
 // static void test##(){}
 static void test01(){
    char *str = "aaabbbbhaijjjm";
-   TEST_STRING(error_printers(str),"0/14");
+   char *act = printerError(str);
+   TEST_STRING(act,"0/14");
+   free(act);
 }
 
 static void test02(){
    char *str =  "aaaxbbbbyyhwawiwjjjwwm";
-   TEST_STRING(error_printers(str),"8/22");
+   TEST_STRING(printerError(str),"8/22");
 }
 
 /* Prototype for all test functions. This allows the creation of an array of
