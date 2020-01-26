@@ -12,12 +12,23 @@
 #include "unitTest.h"
 
 #define TEST_ALL -1
-#define REGULAR -2 
+#define REGULAR -2
 #define SPECIAL -3
 
 // Write all tests here
 // static void test##(){}
-
+static void test01()
+{
+   TEST_UNSIGNED(nbDig(25, 1), 11)
+}
+static void test02()
+{
+   TEST_UNSIGNED(nbDig(5750, 0), 4700);
+}
+static void test03()
+{
+   TEST_UNSIGNED(nbDig(11011, 2), 9481);
+}
 
 /* Prototype for all test functions. This allows the creation of an array of
  * function pointers which makes the testing code shorter and more clear. It
@@ -31,7 +42,7 @@ typedef struct
    char *fnName;
 } Test;
 
-static void testAll(Test* tests)
+static void testAll(Test *tests)
 {
    int i;
 
@@ -45,7 +56,7 @@ static void testAll(Test* tests)
    }
 }
 
-static void findAndCall(Test* tests, const char *type, char *fnName)
+static void findAndCall(Test *tests, const char *type, char *fnName)
 {
    int i;
 
@@ -75,18 +86,18 @@ static void runTests(Test *tests, const char *type, char *fnName)
    free(tests);
 }
 
-static char* checkArgs(int argc, char *argv[], int *testType)
+static char *checkArgs(int argc, char *argv[], int *testType)
 {
    char *testName;
 
    if (argc == 1)
    {
-      *testType = REGULAR;      
+      *testType = REGULAR;
       testName = NULL;
    }
    else if (argc == 2)
    {
-      *testType = REGULAR; 
+      *testType = REGULAR;
       testName = argv[1];
    }
    else if (argc == 3)
@@ -96,7 +107,7 @@ static char* checkArgs(int argc, char *argv[], int *testType)
          fprintf(stderr, "Invalid option '%s'\n", argv[1]);
          exit(EXIT_FAILURE);
       }
-      
+
       *testType = SPECIAL;
       testName = argv[2];
    }
@@ -109,7 +120,7 @@ static char* checkArgs(int argc, char *argv[], int *testType)
    return testName;
 }
 
-Test* initTests(Test tests[], int size)
+Test *initTests(Test tests[], int size)
 {
    Test *dynamicMemory = malloc(size);
 
@@ -140,10 +151,13 @@ Test* initTests(Test tests[], int size)
  *    the scope where the array is declared, otherwise you will just get
  *    the size of the pointer to the array.
  */
-Test* initRegularTests()
+Test *initRegularTests()
 {
    Test local[] = {
-      {NULL, NULL}
+       {test01, "test01"},
+       {test02, "test02"},
+       {test03, "test03"},
+       {NULL, NULL}
 
    };
 
@@ -168,15 +182,14 @@ Test* initRegularTests()
  *    the scope where the array is declared, otherwise you will just get
  *    the size of the pointer to the array.
  */
-Test* initSpecialTests()
+Test *initSpecialTests()
 {
    Test local[] = {
-      //Syntax {funcName,"String"}
-      {NULL, NULL}
-   };
+       //Syntax {funcName,"String"}
+       {NULL, NULL}};
 
    /* See IMPORTANT SUBTLETY above regarding the use of sizeof on arrays */
-   return initTests(local, sizeof(local)); 
+   return initTests(local, sizeof(local));
 }
 
 /* Test driver
@@ -197,12 +210,12 @@ int main(int argc, char *argv[])
 
    /* Get the test name type */
    testName = checkArgs(argc, argv, &testType);
- 
+
    /* Run the test(s)... */
    if (testType == REGULAR)
       runTests(initRegularTests(), "regular", testName);
    else
       runTests(initSpecialTests(), "special", testName);
-   
+
    return 0;
 }
