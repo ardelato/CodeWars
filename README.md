@@ -19,4 +19,5 @@ So I ended up looking to the Codewars API and used `python` to automate that pro
 
 ## To Do
 - [ ] Macro, or some other automation to insert `{test##,"test##"},` into the run tests array after a new test function is created
+- [ ] Fix programming environment to test with gdb
 
